@@ -55,6 +55,7 @@ platformer.level1 ={
         this.megaman = this.game.add.sprite(100, 100, 'megaman', 3);
         this.megaman.anchor.setTo(0.5, 0);
         this.game.physics.arcade.enable(this.megaman);
+        this.megaman.body.setSize(this.megaman.body.width - 5, this.megaman.body.height, 2.5, 0);
         this.megaman.animations.add('run', Phaser.Animation.generateFrameNames('run', 1, 3), 5, true);
         this.shootRun = this.megaman.animations.add('shoot_run', Phaser.Animation.generateFrameNames('shoot_run', 1, 3), 5, true);
         
@@ -129,9 +130,15 @@ platformer.level1 ={
         _bullet.body.allowGravity = false;
         this.shoot.play();
         this.shooting = true;
+    },
+    render:function()
+    {
+        this.game.debug.body(this.megaman);
     }
     
 };
+
+
 
 
 
