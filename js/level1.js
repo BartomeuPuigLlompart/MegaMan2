@@ -77,13 +77,17 @@ platformer.level1 ={
         
         this.loadStairs();
         
-        this.megaman.position.set(this.map.getTile(120, 22, 'lerp').worldX, this.map.getTile(120, 22, 'lerp').worldY, 'patron');
+        //Hardcoded stuff
+        //this.megaman.position.set(this.map.getTile(280, 52, 'lerp').worldX, this.map.getTile(280, 52, 'lerp').worldY, 'patron');
+        //this.game.world.setBounds(0,0,this.map.getTile(287, 40).worldX + this.map.getTile(287, 40).width,1200);
     },
     update:function(){
         this.game.physics.arcade.collide(this.megaman,this.walls);
         this.checkLava();
         this.checkStage();
         if(this.lerping == false) this.checkMegamanMovement();
+        console.log(this.game.world.bounds);
+        console.log(this.stage);
         
         
     },
@@ -179,7 +183,7 @@ platformer.level1 ={
     },
     render:function()
     {
-        this.game.debug.body(this.megaman);
+        //this.game.debug.body(this.megaman);
     },
     
     checkLava:function()
@@ -191,7 +195,6 @@ platformer.level1 ={
     },
     checkStage:function()
     {
-        console.log(this.lerpValue);
         switch(this.stage)
             {
                 case 1:
@@ -208,6 +211,7 @@ platformer.level1 ={
                             this.lerpValue += 0.005;
                             this.camera.follow(this.lerpPatron,Phaser.Camera.FOLLOW_LOCKON, this.lerpValue, this.lerpValue);
                             if(this.lerpValue >= 0.3) {
+                                this.game.world.setBounds(0,0,this.map.getTile(127, 9).worldX + this.map.getTile(127, 9).width,1200);
                                 this.stage = 2;
                                 this.lerpValue = 0;
                                 this.lerping = false;
@@ -232,6 +236,7 @@ platformer.level1 ={
                             this.lerpValue += 0.005;
                             this.camera.follow(this.lerpPatron,Phaser.Camera.FOLLOW_LOCKON, this.lerpValue, this.lerpValue);
                             if(this.lerpValue >= 0.3) {
+                                this.game.world.setBounds(0,0,this.map.getTile(127, 9).worldX + this.map.getTile(127, 9).width,1200);
                                 this.stage = 1;
                                 this.lerpValue = 0;
                                 this.lerping = false;
@@ -253,6 +258,7 @@ platformer.level1 ={
                             this.lerpValue += 0.005;
                             this.camera.follow(this.lerpPatron,Phaser.Camera.FOLLOW_LOCKON, this.lerpValue, this.lerpValue);
                             if(this.lerpValue >= 0.3) {
+                                this.game.world.setBounds(0,0,this.map.getTile(287, 40).worldX + this.map.getTile(287, 40).width,1200);
                                 this.stage = 3;
                                 this.lerpValue = 0;
                                 this.lerping = false;
@@ -275,7 +281,97 @@ platformer.level1 ={
                             this.lerpValue += 0.005;
                             this.camera.follow(this.lerpPatron,Phaser.Camera.FOLLOW_LOCKON, this.lerpValue, this.lerpValue);
                             if(this.lerpValue >= 0.3) {
+                                this.game.world.setBounds(0,0,this.map.getTile(127, 9).worldX + this.map.getTile(127, 9).width,1200);
                                 this.stage = 2;
+                                this.lerpValue = 0;
+                                this.lerping = false;
+                                this.megaman.body.allowGravity = true;
+                            }
+                        }
+                    else if (this.megaman.position.y > this.map.getTile(285, 45, 'lerp').worldY && this.lerping == false)
+                        {
+                            this.lerpPatron = this.game.add.sprite(this.map.getTile(280, 52, 'lerp').worldX, this.map.getTile(280, 52, 'lerp').worldY, 'patron')
+                            this.camera.follow(this.lerpPatron,Phaser.Camera.FOLLOW_LOCKON, this.lerpValue, this.lerpValue);
+                            this.lerping = true;
+                            this.megaman.body.allowGravity = false;
+                            this.megaman.body.velocity.set(0, 0);
+                        }
+                    else if(this.megaman.position.y > this.map.getTile(285, 45, 'lerp').worldY)
+                        {
+                            this.lerpValue += 0.005;
+                            this.camera.follow(this.lerpPatron,Phaser.Camera.FOLLOW_LOCKON, this.lerpValue, this.lerpValue);
+                            if(this.lerpValue >= 0.3) {
+                                this.game.world.setBounds(0,0,this.map.getTile(287, 40).worldX + this.map.getTile(287, 40).width,1200);
+                                this.stage = 4;
+                                this.lerpValue = 0;
+                                this.lerping = false;
+                                this.megaman.body.allowGravity = true;
+                            }
+                        }
+                    break;
+                case 4:
+                    if (this.megaman.position.y < this.map.getTile(285, 45, 'lerp').worldY &&
+                        this.megaman.position.x > this.map.getTile(285, 45, 'lerp').worldX && this.lerping == false)
+                        {
+                            this.lerpPatron = this.megaman;
+                            this.camera.follow(this.lerpPatron,Phaser.Camera.FOLLOW_LOCKON, this.lerpValue, this.lerpValue);
+                            this.lerping = true;
+                            this.megaman.body.allowGravity = false;
+                            this.megaman.body.velocity.set(0, 0);
+                        }
+                    else if(this.megaman.position.y < this.map.getTile(285, 45, 'lerp').worldY &&
+                           this.megaman.position.x > this.map.getTile(285, 45, 'lerp').worldX)
+                        {
+                            
+                            this.lerpValue += 0.005;
+                            this.camera.follow(this.lerpPatron,Phaser.Camera.FOLLOW_LOCKON, this.lerpValue, this.lerpValue);
+                            if(this.lerpValue >= 0.3) {
+                                this.game.world.setBounds(0,0,this.map.getTile(287, 40).worldX + this.map.getTile(287, 40).width,1200);
+                                this.stage = 3;
+                                this.lerpValue = 0;
+                                this.lerping = false;
+                                this.megaman.body.allowGravity = true;
+                            }
+                        }
+                    else if (this.megaman.position.y > this.map.getTile(275, 60, 'lerp').worldY && this.lerping == false)
+                        {
+                            this.lerpPatron = this.megaman;
+                            this.camera.follow(this.lerpPatron,Phaser.Camera.FOLLOW_LOCKON, this.lerpValue, this.lerpValue);
+                            this.lerping = true;
+                            this.megaman.body.allowGravity = false;
+                            this.megaman.body.velocity.set(0, 0);
+                        }
+                    else if(this.megaman.position.y > this.map.getTile(275, 60, 'lerp').worldY)
+                        {
+                            
+                            this.lerpValue += 0.005;
+                            this.camera.follow(this.lerpPatron,Phaser.Camera.FOLLOW_LOCKON, this.lerpValue, this.lerpValue);
+                            if(this.lerpValue >= 0.3) {
+                                this.game.world.setBounds(0,0,this.map.getTile(319, 60).worldX + this.map.getTile(319, 60).width,1200);
+                                this.stage = 5;
+                                this.lerpValue = 0;
+                                this.lerping = false;
+                                this.megaman.body.allowGravity = true;
+                            }
+                        }
+                    break;
+                case 5:
+                    if (this.megaman.position.y < this.map.getTile(275, 60, 'lerp').worldY && this.lerping == false)
+                        {
+                            this.lerpPatron = this.game.add.sprite(this.map.getTile(280, 52, 'lerp').worldX, this.map.getTile(280, 52, 'lerp').worldY, 'patron')
+                            this.camera.follow(this.lerpPatron,Phaser.Camera.FOLLOW_LOCKON, this.lerpValue, this.lerpValue);
+                            this.lerping = true;
+                            this.megaman.body.allowGravity = false;
+                            this.megaman.body.velocity.set(0, 0);
+                        }
+                    else if(this.megaman.position.y < this.map.getTile(275, 60, 'lerp').worldY)
+                        {
+                            
+                            this.lerpValue += 0.005;
+                            this.camera.follow(this.lerpPatron,Phaser.Camera.FOLLOW_LOCKON, this.lerpValue, this.lerpValue);
+                            if(this.lerpValue >= 0.3) {
+                                this.game.world.setBounds(0,0,this.map.getTile(287, 40).worldX + this.map.getTile(287, 40).width,1200);
+                                this.stage = 4;
                                 this.lerpValue = 0;
                                 this.lerping = false;
                                 this.megaman.body.allowGravity = true;
@@ -290,9 +386,14 @@ platformer.level1 ={
         
         var stair_two = new Phaser.Rectangle(this.map.getTile(114, 18, 'Steps').worldX, this.map.getTile(114, 18, 'Steps').worldY, this.map.getTile(114, 18, 'Steps').width, this.map.getTile(114, 18, 'Steps').height * 14);
         
+        var stair_three = new Phaser.Rectangle(this.map.getTile(285, 40, 'Steps').worldX, this.map.getTile(285, 40, 'Steps').worldY, this.map.getTile(285, 40, 'Steps').width, this.map.getTile(285, 40, 'Steps').height * 16);
+        var stair_four = new Phaser.Rectangle(this.map.getTile(275, 54, 'Steps').worldX, this.map.getTile(275, 54, 'Steps').worldY, this.map.getTile(275, 54, 'Steps').width, this.map.getTile(275, 54, 'Steps').height * 9);
+        
         this.stairs = [];
         this.stairs[0] = stair_one;
         this.stairs[1] = stair_two;
+        this.stairs[2] = stair_three;
+        this.stairs[3] = stair_four;
     },
     checkStairs:function()
     {
