@@ -1,6 +1,5 @@
 var platformer = platformer || {};
 
-var double=false;
 platformer.level1 ={
     init:function(){
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -21,9 +20,7 @@ platformer.level1 ={
         this.load.image('bullet', ruta+'bullet.png');
         this.load.spritesheet('silverWatcher',ruta+'silverWatcher.png',18,16);
         this.load.spritesheet('propTop',ruta+'propTop.png',32,38);
-        
-         this.load.spritesheet('bloque', ruta+'bloquesM.png', 16, 17);
-        
+        this.load.spritesheet('bloque', ruta+'bloquesM.png', 16, 17);
         this.load.audio('music','assets/music/levelSong.wav');
         
         this.load.tilemap('HeatManStage','assets/levels/HeatManStage.json',null,Phaser.Tilemap.TILED_JSON);
@@ -70,7 +67,10 @@ platformer.level1 ={
         this.map.setCollisionBetween(1,1,true,'Death');
         this.map.setCollisionBetween(1,1,true,'Steps');
         
-         
+        //music
+         this.music=this.game.add.audio('music');
+        this.music.play();
+        
         this.bloques=this.add.group();
         this.bloques.enableBody=true;
         this.bloques1=this.add.group();
@@ -139,16 +139,11 @@ platformer.level1 ={
         this.gbloque1.animations.add('change',[0,1,2,3],10,true);
          this.gbloque2.animations.add('change',[0,1,2,3],10,true);
          this.gbloque3.animations.add('change',[0,1,2,3],10,true);
-        
-        
-        //music
-         this.music=this.game.add.audio('music');
-        this.music.play();
     
 
         this.space = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
           
-        this.megaman = this.game.add.sprite(100, 100, 'megaman', 3);
+        this.megaman = this.game.add.sprite(1920, 300, 'megaman', 3);
         this.megaman.anchor.setTo(0.5, 0);
         this.game.physics.arcade.enable(this.megaman);
         this.megaman.body.setSize(this.megaman.body.width - 18, this.megaman.body.height, 4.5, 0);
@@ -176,7 +171,6 @@ platformer.level1 ={
         this.loadStairs();
         this.loadEnemies();
         
-        
         //Hardcoded stuff
         //this.spring = new platformer.spring(this.game,100,100,'spring',this);
         //this.game.add.existing(this.spring);
@@ -185,8 +179,7 @@ platformer.level1 ={
         //this.game.world.setBounds(0,0,this.map.getTile(287, 40).worldX + this.map.getTile(287, 40).width,1200);
     },
     update:function(){
-        
-         this.bloque1.animations.play('change',false);
+        this.bloque1.animations.play('change',false);
          this.bloque2.animations.play('change',false);
         this.bloque3.animations.play('change',false);
         this.bloque4.animations.play('change',false);
@@ -313,17 +306,7 @@ platformer.level1 ={
                 if(this.megaman.frame != 3)this.megaman.frame=1;
             }
         }
-<<<<<<< HEAD
-        /*if(double){
-        if(this.cursors.up.isDown&&this.cursors.up.downDuration(1)){ // && this.megaman.body.blocked.down
-            this.megaman.body.velocity.y = -gameOptions.heroJump;
-            this.megaman.animations.stop();
-        }
-        }*/
-            if(this.cursors.up.isDown&&this.cursors.up.downDuration(1)){ // && this.megaman.body.blocked.down
-=======
-        if(this.cursors.up.isDown &&this.cursors.up.downDuration(1) && this.megaman.body.blocked.down){
->>>>>>> 8114cfe75c3056f9672605fc0e9fe5b44e2291cf
+        if(this.cursors.up.isDown &&this.cursors.up.downDuration(1) ){
             this.megaman.body.velocity.y = -gameOptions.heroJump;
             this.megaman.animations.stop();
         }
@@ -676,7 +659,6 @@ platformer.level1 ={
         this.stairs[2] = stair_three;
         this.stairs[3] = stair_four;
     },
-   
     checkStairs:function()
     {
         this.stair = -1;
@@ -691,15 +673,3 @@ platformer.level1 ={
         
     }
 };
-
-
-
-
-
-
-
-
-
-
-
-
