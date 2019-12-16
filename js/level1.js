@@ -85,7 +85,7 @@ platformer.level1 ={
         this.lerpValue = 0;
         this.camera.follow(this.megaman,Phaser.Camera.FOLLOW_PLATFORMER);
         
-        this.game.world.setBounds(0,0,this.map.getTile(127, 9).worldX + this.map.getTile(127, 9).width,1200);
+        this.game.world.setBounds(0,0,this.map.getTile(127, 9).worldX + this.map.getTile(127, 9).width,this.map.getTile(13, 13).worldY + this.map.getTile(13,13).height);
         
         this.loadStairs();
         this.loadEnemies();
@@ -289,7 +289,7 @@ platformer.level1 ={
                             this.lerpValue += 0.005;
                             this.camera.follow(this.lerpPatron,Phaser.Camera.FOLLOW_LOCKON, this.lerpValue, this.lerpValue);
                             if(this.lerpValue >= 0.3) {
-                                this.game.world.setBounds(0,0,this.map.getTile(127, 9).worldX + this.map.getTile(127, 9).width,1200);
+                                this.game.world.setBounds(0,0,this.map.getTile(127, 9).worldX + this.map.getTile(127, 9).width,this.map.getTile(13, 13).worldY + this.map.getTile(13,13).height);
                                 this.stage = 1;
                                 this.lerpValue = 0;
                                 this.lerping = false;
@@ -311,7 +311,7 @@ platformer.level1 ={
                             this.lerpValue += 0.005;
                             this.camera.follow(this.lerpPatron,Phaser.Camera.FOLLOW_LOCKON, this.lerpValue, this.lerpValue);
                             if(this.lerpValue >= 0.3) {
-                                this.game.world.setBounds(0,0,this.map.getTile(287, 40).worldX + this.map.getTile(287, 40).width,1200);
+                                this.game.world.setBounds(0,0,this.map.getTile(287, 40).worldX + this.map.getTile(287, 40).width,this.map.getTile(132,44).worldY + this.map.getTile(132,44).height);
                                 this.stage = 3;
                                 this.lerpValue = 0;
                                 this.lerping = false;
@@ -379,7 +379,7 @@ platformer.level1 ={
                             this.lerpValue += 0.005;
                             this.camera.follow(this.lerpPatron,Phaser.Camera.FOLLOW_LOCKON, this.lerpValue, this.lerpValue);
                             if(this.lerpValue >= 0.3) {
-                                this.game.world.setBounds(0,0,this.map.getTile(287, 40).worldX + this.map.getTile(287, 40).width,1200);
+                                this.game.world.setBounds(0,0,this.map.getTile(287, 40).worldX + this.map.getTile(287, 40).width,this.map.getTile(132,44).worldY + this.map.getTile(132,44).height);
                                 this.stage = 3;
                                 this.lerpValue = 0;
                                 this.lerping = false;
