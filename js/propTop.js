@@ -12,6 +12,7 @@ platformer.propTop = function(_game,_x,_y,_speed,_direction,_level){
     this.animations.play('propTop_fly');
     _game.physics.arcade.enable(this);
     this.body.allowGravity = true;
+    this.body.setSize(this.body.width - 8, this.body.height, this.body.offset.x, this.body.offset.y);
     this.frameCount = 180;
     this.target = 0;
     this.initialX = this.position.x;
@@ -23,6 +24,11 @@ platformer.propTop.prototype = Object.create(Phaser.Sprite.prototype);
 platformer.propTop.prototype.constructor = platformer.propTop;
 
 platformer.propTop.prototype.update = function(){
+    if(!this.inCamera) {
+        this.body.velocity.x = 0;
+        this.body.velocity.y = 0;
+        return;
+    }
     this.frameCount++;
     if(this.level.megaman.position.x > this.position.x)
         {

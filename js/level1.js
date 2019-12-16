@@ -49,6 +49,12 @@ platformer.level1 ={
         this.lerp.setScale(0.5, 0.5);
         this.silverWatcherRes = this.map.createLayer('silverWatcherRes');
         this.silverWatcherRes.setScale(0.5, 0.5);
+        this.propTopRes = this.map.createLayer('propTopRes');
+        this.propTopRes.setScale(0.5, 0.5);
+        this.springHeadRes = this.map.createLayer('springHeadRes');
+        this.springHeadRes.setScale(0.5, 0.5);
+        this.joeRes = this.map.createLayer('joeRes');
+        this.joeRes.setScale(0.5, 0.5);
         this.map.setCollisionBetween(1,1,true,'Walls');
         this.map.setCollisionBetween(1,1,true,'Death');
         this.map.setCollisionBetween(1,1,true,'Steps');
@@ -82,17 +88,18 @@ platformer.level1 ={
         this.game.world.setBounds(0,0,this.map.getTile(127, 9).worldX + this.map.getTile(127, 9).width,1200);
         
         this.loadStairs();
+        this.loadEnemies();
         
         //Hardcoded stuff
-        this.silverWatcher = new platformer.silverWatcher(this.game,50,100,20,1,this);
-        this.loadEnemies();
-        this.propTop = new platformer.propTop(this.game,100,100,50,-1,this);
         //this.megaman.position.set(this.map.getTile(280, 52, 'lerp').worldX, this.map.getTile(280, 52, 'lerp').worldY, 'patron');
         //this.game.world.setBounds(0,0,this.map.getTile(287, 40).worldX + this.map.getTile(287, 40).width,1200);
     },
     update:function(){
         this.game.physics.arcade.collide(this.megaman,this.walls);
-        this.game.physics.arcade.collide(this.propTop,this.walls);
+        for(var i = 0; i < this.propTops.length; i++)
+            {
+                this.game.physics.arcade.collide(this.propTops[i],this.walls);
+            }
         this.checkLava();
         this.checkStage();
         if(this.lerping == false) this.checkMegamanMovement();
@@ -101,12 +108,31 @@ platformer.level1 ={
     loadEnemies:function()
     {
         //Silver Watchers
-        /*var respawnArray = this.silverWatcherRes.getTiles(0, 0, 5000, 1000);
-        console.log(respawnArray);
-        for (var i=0;i < respawnArray.length;i++)
-        {
-            new platformer.silverWatcher(this.game,respawnArray[i].worldX,respawnArray[i].worldY,20,1,this);
-        }*/
+        this.silverWatchers = [];
+        this.silverWatchers[0] = new platformer.silverWatcher(this.game,this.map.getTile(42, 5, 'silverWatcherRes').worldX,this.map.getTile(42,5, 'silverWatcherRes').worldY,20,1,this);
+        this.silverWatchers[1] = new platformer.silverWatcher(this.game,this.map.getTile(46, 7, 'silverWatcherRes').worldX,this.map.getTile(46,7, 'silverWatcherRes').worldY,20,1,this);
+        this.silverWatchers[2] = new platformer.silverWatcher(this.game,this.map.getTile(52, 4, 'silverWatcherRes').worldX,this.map.getTile(52,4, 'silverWatcherRes').worldY,20,1,this);
+        this.silverWatchers[3] = new platformer.silverWatcher(this.game,this.map.getTile(56, 6, 'silverWatcherRes').worldX,this.map.getTile(56,6, 'silverWatcherRes').worldY,20,1,this);
+        this.silverWatchers[4] = new platformer.silverWatcher(this.game,this.map.getTile(61, 9, 'silverWatcherRes').worldX,this.map.getTile(61,9, 'silverWatcherRes').worldY,20,1,this);
+        this.silverWatchers[5] = new platformer.silverWatcher(this.game,this.map.getTile(66, 5, 'silverWatcherRes').worldX,this.map.getTile(66,5, 'silverWatcherRes').worldY,20,1,this);
+        this.silverWatchers[6] = new platformer.silverWatcher(this.game,this.map.getTile(72, 5, 'silverWatcherRes').worldX,this.map.getTile(72,5, 'silverWatcherRes').worldY,20,1,this);
+        this.silverWatchers[7] = new platformer.silverWatcher(this.game,this.map.getTile(78, 3, 'silverWatcherRes').worldX,this.map.getTile(78,3, 'silverWatcherRes').worldY,20,1,this);
+        this.silverWatchers[8] = new platformer.silverWatcher(this.game,this.map.getTile(84, 5, 'silverWatcherRes').worldX,this.map.getTile(84,5, 'silverWatcherRes').worldY,20,1,this);
+        this.silverWatchers[9] = new platformer.silverWatcher(this.game,this.map.getTile(92, 5, 'silverWatcherRes').worldX,this.map.getTile(92,5, 'silverWatcherRes').worldY,20,1,this);
+        this.silverWatchers[10] = new platformer.silverWatcher(this.game,this.map.getTile(123, 35, 'silverWatcherRes').worldX,this.map.getTile(123,35, 'silverWatcherRes').worldY,20,1,this);
+        this.silverWatchers[11] = new platformer.silverWatcher(this.game,this.map.getTile(126, 37, 'silverWatcherRes').worldX,this.map.getTile(126,37, 'silverWatcherRes').worldY,20,1,this);
+        this.silverWatchers[12] = new platformer.silverWatcher(this.game,this.map.getTile(133, 34, 'silverWatcherRes').worldX,this.map.getTile(133,34, 'silverWatcherRes').worldY,20,1,this);
+        this.silverWatchers[13] = new platformer.silverWatcher(this.game,this.map.getTile(144, 38, 'silverWatcherRes').worldX,this.map.getTile(144,38, 'silverWatcherRes').worldY,20,1,this);
+        this.silverWatchers[14] = new platformer.silverWatcher(this.game,this.map.getTile(147, 37, 'silverWatcherRes').worldX,this.map.getTile(147,37, 'silverWatcherRes').worldY,20,1,this);
+        this.silverWatchers[15] = new platformer.silverWatcher(this.game,this.map.getTile(150, 34, 'silverWatcherRes').worldX,this.map.getTile(150,34, 'silverWatcherRes').worldY,20,1,this);
+        this.silverWatchers[16] = new platformer.silverWatcher(this.game,this.map.getTile(157, 34, 'silverWatcherRes').worldX,this.map.getTile(157,34, 'silverWatcherRes').worldY,20,1,this);
+        this.silverWatchers[17] = new platformer.silverWatcher(this.game,this.map.getTile(169, 34, 'silverWatcherRes').worldX,this.map.getTile(169,34, 'silverWatcherRes').worldY,20,1,this);
+        
+        //Prop-Tops
+        this.propTops = [];
+        this.propTops[0] = new platformer.propTop(this.game,this.map.getTile(23, 1, 'propTopRes').worldX,this.map.getTile(23, 1, 'propTopRes').worldY,50,-1,this); 
+        this.propTops[1] = new platformer.propTop(this.game,this.map.getTile(31, 1, 'propTopRes').worldX,this.map.getTile(31, 1, 'propTopRes').worldY,50,-1,this); 
+        this.propTops[2] = new platformer.propTop(this.game,this.map.getTile(41, 1, 'propTopRes').worldX,this.map.getTile(41, 1, 'propTopRes').worldY,50,-1,this); 
     },
     checkMegamanMovement:function()
     {
@@ -163,7 +189,7 @@ platformer.level1 ={
             else {
                 this.megaman.body.velocity.set(0, 0);
             }
-            if(this.megaman.body.blocked.down)
+            if(this.map.getTileWorldXY(this.megaman.position.x, this.megaman.position.y + this.megaman.height + 8, 16, 16, 'Walls') != null)
                 {
                     if(this.cursors.left.isDown){
             this.megaman.body.velocity.x = -gameOptions.heroSpeed;
@@ -174,8 +200,15 @@ platformer.level1 ={
                 }
             else {
                 this.megaman.position.x = this.stairs[this.stair].centerX + 2.5;
-            }
+                if(this.cursors.left.isDown)
+                {
+                    this.megaman.scale.x = -1;
+                }
+            else if(this.cursors.right.isDown)
+            {
             this.megaman.scale.x = 1;
+            }
+            }
         }
     },
     loadBullets:function(){
@@ -201,6 +234,8 @@ platformer.level1 ={
     render:function()
     {
         //this.game.debug.body(this.megaman);
+        //this.game.debug.body(this.propTops[0]);
+        //this.game.debug.body(this.silverWatchers[0]);
     },
     
     checkLava:function()
@@ -208,6 +243,7 @@ platformer.level1 ={
         if(this.game.physics.arcade.collide(this.megaman,this.death)) 
         {
             this.megaman.reset(100,100);
+            this.stage = 1;
         }
     },
     checkStage:function()

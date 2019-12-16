@@ -11,6 +11,7 @@ platformer.silverWatcher = function(_game,_x,_y,_speed,_direction,_level){
     this.animations.play('silver_Watcher');
     _game.physics.arcade.enable(this);
     this.body.allowGravity = false;
+    this.body.setSize(this.body.width - 2, this.body.height, this.body.offset.x + 1, this.body.offset.y);
     this.tileTarget = this.level.map.getTileWorldXY(this.position.x, this.position.y, 16, 16, 'World');
 };
 
@@ -19,6 +20,11 @@ platformer.silverWatcher.prototype = Object.create(Phaser.Sprite.prototype);
 platformer.silverWatcher.prototype.constructor = platformer.silverWatcher;
 
 platformer.silverWatcher.prototype.update = function(){
+    if(!this.inCamera) {
+        this.body.velocity.x = 0;
+        this.body.velocity.y = 0;
+        return;
+    }
     if(Phaser.Point.distance(new Phaser.Point(this.position.x, this.position.y), new Phaser.Point(this.tileTarget.worldX, this.tileTarget.worldY)) < 16)
         {
             var myTilePos = this.level.map.getTileWorldXY(this.position.x, this.position.y, 16, 16, 'World');
