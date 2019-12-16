@@ -40,6 +40,7 @@ platformer.introduc ={
     update:function(){ //actualizamos assets
       
         this.intro=this.game.add.audio('intro');
+        this.intro.volume = 0.01;
         this.intro.play();
          if(this.spacebar.isDown){
             this.game.sound.stopAll();

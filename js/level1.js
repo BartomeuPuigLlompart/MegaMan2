@@ -28,6 +28,7 @@ platformer.level1 ={
         this.load.atlas('megaman', ruta + 'megaman.png', ruta +'megaman.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
         this.load.atlas('walker', ruta + 'walker.png', ruta +'walker.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH); 
         this.load.atlas('sniper', ruta + 'sniper.png', ruta +'sniper.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
+        this.load.atlas('spring', ruta + 'spring.png', ruta +'spring.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
         
         this.load.spritesheet('healthbar', ruta+'healthbar.png', 8, 56);
         this.cursors = this.game.input.keyboard.createCursorKeys();
@@ -102,6 +103,9 @@ platformer.level1 ={
         this.loadEnemies();
         
         //Hardcoded stuff
+        //this.spring = new platformer.spring(this.game,100,100,'spring',this);
+        //this.game.add.existing(this.spring);
+        //this.spring.animations.add('attack',[2,1,0],5,false);
         //this.megaman.position.set(this.map.getTile(280, 52, 'lerp').worldX, this.map.getTile(280, 52, 'lerp').worldY, 'patron');
         //this.game.world.setBounds(0,0,this.map.getTile(287, 40).worldX + this.map.getTile(287, 40).width,1200);
     },
@@ -159,6 +163,21 @@ platformer.level1 ={
         this.walker.animations.add('jump', Phaser.Animation.generateFrameNames('walker', 1, 3), 10, false);
         
         this.sniper = new platformer.sniper(this.game,this.map.getTile(277, 51, 'joeRes').worldX,this.map.getTile(277, 51, 'joeRes').worldY,'sniper',this);
+        
+        //Springs
+        this.springs = [];
+        this.springs[0] = new platformer.spring(this.game,this.map.getTile(122, 5, 'springHeadRes').worldX,this.map.getTile(122, 5, 'springHeadRes').worldY,'spring',this);
+        this.springs[0].animations.add('attack',[2,1,0],5,false);
+        this.game.add.existing(this.springs[0]);
+        this.springs[1] = new platformer.spring(this.game,this.map.getTile(121, 9, 'springHeadRes').worldX,this.map.getTile(121, 9, 'springHeadRes').worldY,'spring',this);
+        this.springs[1].animations.add('attack',[2,1,0],5,false);
+        this.game.add.existing(this.springs[1]);
+        this.springs[2] = new platformer.spring(this.game,this.map.getTile(116, 27, 'springHeadRes').worldX,this.map.getTile(116, 27, 'springHeadRes').worldY,'spring',this);
+        this.springs[2].animations.add('attack',[2,1,0],5,false);
+        this.game.add.existing(this.springs[2]);
+        this.springs[3] = new platformer.spring(this.game,this.map.getTile(203, 41, 'springHeadRes').worldX,this.map.getTile(203, 41, 'springHeadRes').worldY,'spring',this);
+        this.springs[3].animations.add('attack',[2,1,0],5,false);
+        this.game.add.existing(this.springs[3]);
     },
     checkMegamanMovement:function()
     {
@@ -190,7 +209,7 @@ platformer.level1 ={
                 if(this.megaman.frame != 3)this.megaman.frame=1;
             }
         }
-        if(this.cursors.up.isDown &&this.cursors.up.downDuration(1)){ // && this.megaman.body.blocked.down
+        if(this.cursors.up.isDown &&this.cursors.up.downDuration(1) && this.megaman.body.blocked.down){
             this.megaman.body.velocity.y = -gameOptions.heroJump;
             this.megaman.animations.stop();
         }
@@ -275,7 +294,8 @@ platformer.level1 ={
     },
     render:function()
     {
-        this.game.debug.body(this.megaman);
+        //this.game.debug.body(this.megaman);
+        this.game.debug.body(this.springs[0]);
         //this.game.debug.body(this.propTops[0]);
         //this.game.debug.body(this.silverWatchers[0]);
     },
@@ -498,6 +518,14 @@ platformer.level1 ={
         for(var i = 0; i < this.propTops.length; i++)
             {
                 if(this.game.physics.arcade.overlap(this.propTops[i],this.megaman)) {
+                    this.megaman.inmuFrames = 0;
+                    this.megaman.lifeFrames += 4;
+                }
+            }
+        
+        for(var k = 0; k < this.springs.length; k++)
+            {
+                if(this.game.physics.arcade.overlap(this.springs[k],this.megaman)) {
                     this.megaman.inmuFrames = 0;
                     this.megaman.lifeFrames += 4;
                 }
