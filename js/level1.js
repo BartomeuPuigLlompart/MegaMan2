@@ -16,6 +16,8 @@ platformer.level1 ={
         this.load.image('patron',ruta+'patron.png');
         this.load.image('Death',ruta+'patron.png');        
         this.load.image('bullet', ruta+'bullet.png');
+        this.load.spritesheet('silverWatcher',ruta+'silverWatcher.png',18,16);
+        this.load.spritesheet('propTop',ruta+'propTop.png',32,38);
         
         this.load.tilemap('HeatManStage','assets/levels/HeatManStage.json',null,Phaser.Tilemap.TILED_JSON);
         
@@ -37,12 +39,16 @@ platformer.level1 ={
         this.map.addTilesetImage('patron');
         this.walls = this.map.createLayer('Walls');
         this.walls.setScale(0.5, 0.5);
+        this.tileWorld = this.map.createLayer('World');
+        this.tileWorld.setScale(0.5, 0.5);
         this.death = this.map.createLayer('Death');
         this.death.setScale(0.5, 0.5);
         this.steps = this.map.createLayer('Steps');
         this.steps.setScale(0.5, 0.5);
         this.lerp = this.map.createLayer('lerp');
         this.lerp.setScale(0.5, 0.5);
+        this.silverWatcherRes = this.map.createLayer('silverWatcherRes');
+        this.silverWatcherRes.setScale(0.5, 0.5);
         this.map.setCollisionBetween(1,1,true,'Walls');
         this.map.setCollisionBetween(1,1,true,'Death');
         this.map.setCollisionBetween(1,1,true,'Steps');
@@ -78,18 +84,29 @@ platformer.level1 ={
         this.loadStairs();
         
         //Hardcoded stuff
+        this.silverWatcher = new platformer.silverWatcher(this.game,50,100,20,1,this);
+        this.loadEnemies();
+        this.propTop = new platformer.propTop(this.game,100,100,50,-1,this);
         //this.megaman.position.set(this.map.getTile(280, 52, 'lerp').worldX, this.map.getTile(280, 52, 'lerp').worldY, 'patron');
         //this.game.world.setBounds(0,0,this.map.getTile(287, 40).worldX + this.map.getTile(287, 40).width,1200);
     },
     update:function(){
         this.game.physics.arcade.collide(this.megaman,this.walls);
+        this.game.physics.arcade.collide(this.propTop,this.walls);
         this.checkLava();
         this.checkStage();
         if(this.lerping == false) this.checkMegamanMovement();
-        console.log(this.game.world.bounds);
-        console.log(this.stage);
         
-        
+    },
+    loadEnemies:function()
+    {
+        //Silver Watchers
+        /*var respawnArray = this.silverWatcherRes.getTiles(0, 0, 5000, 1000);
+        console.log(respawnArray);
+        for (var i=0;i < respawnArray.length;i++)
+        {
+            new platformer.silverWatcher(this.game,respawnArray[i].worldX,respawnArray[i].worldY,20,1,this);
+        }*/
     },
     checkMegamanMovement:function()
     {
