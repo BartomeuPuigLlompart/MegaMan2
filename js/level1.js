@@ -1,5 +1,6 @@
 var platformer = platformer || {};
 
+var double=false;
 platformer.level1 ={
     init:function(){
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -20,6 +21,8 @@ platformer.level1 ={
         this.load.image('bullet', ruta+'bullet.png');
         this.load.spritesheet('silverWatcher',ruta+'silverWatcher.png',18,16);
         this.load.spritesheet('propTop',ruta+'propTop.png',32,38);
+        
+         this.load.spritesheet('bloque', ruta+'bloquesM.png', 16, 17);
         
         this.load.audio('music','assets/music/levelSong.wav');
         
@@ -66,6 +69,77 @@ platformer.level1 ={
         this.map.setCollisionBetween(1,1,true,'Death');
         this.map.setCollisionBetween(1,1,true,'Steps');
         
+         
+        this.bloques=this.add.group();
+        this.bloques.enableBody=true;
+        this.bloques1=this.add.group();
+        this.bloques1.enableBody=true;
+        this.bloques2=this.add.group();
+        this.bloques2.enableBody=true;
+            
+        
+        this.bloque1 = this.game.add.sprite(1955, 365, 'bloque');
+        this.bloques.add(this.bloque1);
+        this.bloque2 = this.game.add.sprite(1880, 300, 'bloque');
+        this.bloques.add(this.bloque2);
+        
+        this.bloque3 = this.game.add.sprite(1955, 310, 'bloque');
+        this.bloques1.add(this.bloque3);
+        
+          this.bloque4 = this.game.add.sprite(1900, 320, 'bloque');
+        this.bloques2.add(this.bloque4);
+       
+        this.bloque1.body.immovable=true;
+        this.bloque1.body.allowGravity=false;
+        this.bloque2.body.immovable=true;
+        this.bloque2.body.allowGravity=false;
+        
+         this.bloque3.body.immovable=true;
+        this.bloque3.body.allowGravity=false;
+        
+         this.bloque4.body.immovable=true;
+        this.bloque4.body.allowGravity=false;
+        
+        this.bloques.visible=false;
+        this.bloques1.visible=false;
+        this.bloques2.visible=false;
+        
+        
+        this.bloque1.animations.add('change',[0,1,2,3],10,true);
+        
+        this.bloque2.animations.add('change',[0,1,2,3],10,true);
+        
+        this.bloque3.animations.add('change',[0,1,2,3],10,true);
+        this.bloque4.animations.add('change',[0,1,2,3],10,true);
+        
+        this.groupBloques=this.add.group();
+        this.groupBloques.enableBody=true;
+       
+         this.gbloque = this.game.add.sprite(2208, 630, 'bloque');
+        this.groupBloques.add(this.gbloque);
+        this.gbloque1 = this.game.add.sprite(2093, 640, 'bloque');
+        this.groupBloques.add(this.gbloque1);
+         this.gbloque2 = this.game.add.sprite(2208, 580, 'bloque');
+        this.groupBloques.add(this.gbloque2);
+         this.gbloque3 = this.game.add.sprite(2768, 630, 'bloque');
+        this.groupBloques.add(this.gbloque3);
+        
+        this.gbloque.body.immovable=true;
+        this.gbloque.body.allowGravity=false;
+         this.gbloque1.body.immovable=true;
+        this.gbloque1.body.allowGravity=false;
+        this.gbloque2.body.immovable=true;
+        this.gbloque2.body.allowGravity=false;
+        this.gbloque3.body.immovable=true;
+        this.gbloque3.body.allowGravity=false;
+        
+        
+        this.gbloque.animations.add('change',[0,1,2,3],10,true);
+        this.gbloque1.animations.add('change',[0,1,2,3],10,true);
+         this.gbloque2.animations.add('change',[0,1,2,3],10,true);
+         this.gbloque3.animations.add('change',[0,1,2,3],10,true);
+        
+        
         //music
          this.music=this.game.add.audio('music');
         this.music.play();
@@ -101,11 +175,41 @@ platformer.level1 ={
         this.loadStairs();
         this.loadEnemies();
         
+        
         //Hardcoded stuff
         //this.megaman.position.set(this.map.getTile(280, 52, 'lerp').worldX, this.map.getTile(280, 52, 'lerp').worldY, 'patron');
         //this.game.world.setBounds(0,0,this.map.getTile(287, 40).worldX + this.map.getTile(287, 40).width,1200);
     },
     update:function(){
+        
+         this.bloque1.animations.play('change',false);
+         this.bloque2.animations.play('change',false);
+        this.bloque3.animations.play('change',false);
+        this.bloque4.animations.play('change',false);
+        this.gbloque.animations.play('change',false);
+        this.gbloque1.animations.play('change',false);
+        this.gbloque2.animations.play('change',false);
+        this.gbloque3.animations.play('change',false);
+        
+       
+        if(this.megaman.position.y>300){
+            this.bloques.visible=true;
+            this.bloques2.visible=false;
+        }
+         if(this.megaman.position.y>300&&this.megaman.position.x<1958){
+            this.bloques1.visible=true;
+        }
+        
+         if(this.megaman.position.y<305&&this.megaman.position.x<1955){
+             this.bloques.visible=false;
+             this.bloques2.visible=true;
+        }
+        
+        this.game.physics.arcade.collide(this.megaman,this.bloques);
+        this.game.physics.arcade.collide(this.megaman,this.bloques1);
+        this.game.physics.arcade.collide(this.megaman,this.bloques2);
+         this.game.physics.arcade.collide(this.megaman,this.groupBloques);
+       
         if(this.dismount == true) {
             this.game.add.existing(this.sniper);
         }
@@ -190,7 +294,13 @@ platformer.level1 ={
                 if(this.megaman.frame != 3)this.megaman.frame=1;
             }
         }
-        if(this.cursors.up.isDown &&this.cursors.up.downDuration(1)){ // && this.megaman.body.blocked.down
+        /*if(double){
+        if(this.cursors.up.isDown&&this.cursors.up.downDuration(1)){ // && this.megaman.body.blocked.down
+            this.megaman.body.velocity.y = -gameOptions.heroJump;
+            this.megaman.animations.stop();
+        }
+        }*/
+            if(this.cursors.up.isDown&&this.cursors.up.downDuration(1)){ // && this.megaman.body.blocked.down
             this.megaman.body.velocity.y = -gameOptions.heroJump;
             this.megaman.animations.stop();
         }
@@ -534,6 +644,7 @@ platformer.level1 ={
         this.stairs[2] = stair_three;
         this.stairs[3] = stair_four;
     },
+   
     checkStairs:function()
     {
         this.stair = -1;
