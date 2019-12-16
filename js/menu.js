@@ -7,7 +7,7 @@ var _link;
 platformer.menu ={
     init:function(){
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-        this.scale.setGameSize(gameOptions.gameWidth / 2,gameOptions.gameHeight / 2);
+        this.scale.setGameSize(gameOptions.gameWidth,gameOptions.gameHeight / 2);
         this.scale.pageAlignHorizontally = true;
         this.scale.pageAlignVertically = true;
            },

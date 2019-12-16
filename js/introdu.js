@@ -7,7 +7,7 @@ var _link;
 platformer.introduc ={
     init:function(){
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-        this.scale.setGameSize(gameOptions.gameWidth / 2,gameOptions.gameHeight / 2);
+        this.scale.setGameSize(gameOptions.gameWidth,gameOptions.gameHeight / 2);
         this.scale.pageAlignHorizontally = true;
         this.scale.pageAlignVertically = true;
            },
@@ -39,7 +39,7 @@ platformer.introduc ={
     update:function(){ //actualizamos assets
       
        
-         if(this.spacebar.isDown){
+         if(this.spacebar.isDown && _flecha.position.y==176){
             
             this.game.state.start('menu');
         }
