@@ -5,6 +5,7 @@ platformer.silverWatcher = function(_game,_x,_y,_speed,_direction,_level){
     this.anchor.setTo(.5);
     this.level = _level;
     this.speed = _speed;
+    this.health = 1;
     this.directionX = this.directionY = _direction;
     _game.add.existing(this);
     this.animations.add('silver_Watcher',[0, 1, 2, 3, 4, 5],10,true);
@@ -70,11 +71,14 @@ platformer.silverWatcher.prototype.update = function(){
         }
     this.body.velocity.x = this.speed*this.directionX;
     this.body.velocity.y = this.speed*this.directionY;
-    //rebota al colisionar con paredes
-    /*if(this.body.blocked.left ||this.body.blocked.right){
-        this.direction *=-1;
-        this.scale.x = this.direction;
-        this.body.velocity.x = this.speed*this.direction;
-    }*/
-       
+    
+    this.game.physics.arcade.overlap(this,this.level.bullets,this.damage); 
+}
+platformer.silverWatcher.prototype.damage = function(_silverWatcher, _bullet){
+ //Whatever
+    _silverWatcher.health--;
+    if(_silverWatcher.health == 0){ 
+        _silverWatcher.kill();
+    }
+    _bullet.destroy();
 };

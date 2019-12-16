@@ -8,6 +8,8 @@ platformer.level1 ={
         this.scale.pageAlignVertically = true;
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
         this.game.physics.arcade.gravity.y = gameOptions.heroGravity;
+        this.timer = this.game.time.create(false);
+        this.timer.loop(200, this.stairAnimation, this);
         
     },
     preload:function(){
@@ -22,6 +24,8 @@ platformer.level1 ={
         this.load.tilemap('HeatManStage','assets/levels/HeatManStage.json',null,Phaser.Tilemap.TILED_JSON);
         
         this.load.atlas('megaman', ruta + 'megaman.png', ruta +'megaman.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
+        this.load.atlas('walker', ruta + 'walker.png', ruta +'walker.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH); 
+        this.load.atlas('sniper', ruta + 'sniper.png', ruta +'sniper.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
         
         this.load.spritesheet('healthbar', ruta+'healthbar.png', 8, 56);
         this.cursors = this.game.input.keyboard.createCursorKeys();
@@ -31,6 +35,7 @@ platformer.level1 ={
         this.load.audio('shoot',ruta+'shoot.wav');
         this.load.audio('endJump',ruta+'endJump.wav');
         this.shooting = false;
+        this.dismount = false;
     },
     create:function(){
         this.bg = this.game.add.tileSprite(0,0,10240,2400,'bg');
@@ -61,18 +66,18 @@ platformer.level1 ={
     
 
         this.space = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-        
-        
-        this.healthbar = this.game.add.sprite(20, 10, 'healthbar', 0);
-        this.healthbar.fixedToCamera = true;
-        
-        
+          
         this.megaman = this.game.add.sprite(100, 100, 'megaman', 3);
         this.megaman.anchor.setTo(0.5, 0);
         this.game.physics.arcade.enable(this.megaman);
-        this.megaman.body.setSize(this.megaman.body.width - 9, this.megaman.body.height, 4.5, 0);
+        this.megaman.body.setSize(this.megaman.body.width - 18, this.megaman.body.height, 4.5, 0);
         this.megaman.animations.add('run', Phaser.Animation.generateFrameNames('run', 1, 3), 5, true);
+        this.megaman.lifeFrames = 0;
+        this.megaman.inmuFrames = 60;
         this.shootRun = this.megaman.animations.add('shoot_run', Phaser.Animation.generateFrameNames('shoot_run', 1, 3), 5, true);
+        
+        this.healthbar = this.game.add.sprite(20, 10, 'healthbar', this.megaman.lifeFrames);
+        this.healthbar.fixedToCamera = true;
         
         this.stage = 1;
         
@@ -95,14 +100,22 @@ platformer.level1 ={
         //this.game.world.setBounds(0,0,this.map.getTile(287, 40).worldX + this.map.getTile(287, 40).width,1200);
     },
     update:function(){
-        this.game.physics.arcade.collide(this.megaman,this.walls);
-        for(var i = 0; i < this.propTops.length; i++)
+        if(this.dismount == true) {
+            this.game.add.existing(this.sniper);
+        }
+        this.checkCollisions();
+        if(this.megaman.inmuFrames == 60)
+        {
+        this.checkAtacks();
+        }
+        else
             {
-                this.game.physics.arcade.collide(this.propTops[i],this.walls);
+                this.megaman.inmuFrames++;
             }
         this.checkLava();
         this.checkStage();
         if(this.lerping == false) this.checkMegamanMovement();
+        this.healthbar.frame = this.megaman.lifeFrames;
         
     },
     loadEnemies:function()
@@ -133,6 +146,13 @@ platformer.level1 ={
         this.propTops[0] = new platformer.propTop(this.game,this.map.getTile(23, 1, 'propTopRes').worldX,this.map.getTile(23, 1, 'propTopRes').worldY,50,-1,this); 
         this.propTops[1] = new platformer.propTop(this.game,this.map.getTile(31, 1, 'propTopRes').worldX,this.map.getTile(31, 1, 'propTopRes').worldY,50,-1,this); 
         this.propTops[2] = new platformer.propTop(this.game,this.map.getTile(41, 1, 'propTopRes').worldX,this.map.getTile(41, 1, 'propTopRes').worldY,50,-1,this); 
+        
+        //Joe sniper/walker
+        this.walker = new platformer.walker(this.game,this.map.getTile(277, 51, 'joeRes').worldX,this.map.getTile(277, 51, 'joeRes').worldY,'walker',this);
+        this.game.add.existing(this.walker);
+        this.walker.animations.add('jump', Phaser.Animation.generateFrameNames('walker', 1, 3), 10, false);
+        
+        this.sniper = new platformer.sniper(this.game,this.map.getTile(277, 51, 'joeRes').worldX,this.map.getTile(277, 51, 'joeRes').worldY,'sniper',this);
     },
     checkMegamanMovement:function()
     {
@@ -160,8 +180,8 @@ platformer.level1 ={
             this.megaman.body.velocity.x = 0;
             if(this.megaman.body.blocked.down){
                 this.megaman.animations.stop();
-                if(this.shooting == true) this.megaman.frame = 9;
-                if(this.megaman.frame != 9)this.megaman.frame=3;
+                if(this.shooting == true) this.megaman.frame = 3;
+                if(this.megaman.frame != 3)this.megaman.frame=1;
             }
         }
         if(this.cursors.up.isDown &&this.cursors.up.downDuration(1)){ // && this.megaman.body.blocked.down
@@ -169,22 +189,28 @@ platformer.level1 ={
             this.megaman.animations.stop();
         }
         if(!this.megaman.body.blocked.down){
-            if(this.megaman.frame != 1){
-                this.megaman.frame = 0;
+            if(this.megaman.frame != 12){
+                this.megaman.frame = 11;
             }
             if(this.shooting == true){
-                this.megaman.frame = 1;
+                this.megaman.frame = 12;
             }
         }
         this.shooting = false;
         }
         else{
+            if(this.timer.running  == false){
+                this.timer.start();
+            }
+            this.timer.pause();
             this.megaman.body.allowGravity = false;           
             if(this.cursors.up.isDown){
             this.megaman.body.velocity.y = -gameOptions.heroSpeed;
+            this.timer.resume();
         }
             else if(this.cursors.down.isDown){
             this.megaman.body.velocity.y = gameOptions.heroSpeed;
+            this.timer.resume();
             }
             else {
                 this.megaman.body.velocity.set(0, 0);
@@ -202,11 +228,17 @@ platformer.level1 ={
                 this.megaman.position.x = this.stairs[this.stair].centerX + 2.5;
                 if(this.cursors.left.isDown)
                 {
+                    this.megaman.frame = 2;
                     this.megaman.scale.x = -1;
                 }
             else if(this.cursors.right.isDown)
             {
+                this.megaman.frame = 2;
             this.megaman.scale.x = 1;
+            }
+            else
+            {
+            this.megaman.frame = 4;
             }
             }
         }
@@ -214,6 +246,10 @@ platformer.level1 ={
     loadBullets:function(){
         this.bullets=this.add.group();
         this.bullets.enableBody = true;
+    },
+    stairAnimation:function(){
+        if(this.megaman.frame != 4) return;
+        this.megaman.scale.x *= -1;
     },
     createBullet:function(){
         var _bullet = this.bullets.getFirstExists(false);
@@ -233,17 +269,19 @@ platformer.level1 ={
     },
     render:function()
     {
-        //this.game.debug.body(this.megaman);
+        this.game.debug.body(this.megaman);
         //this.game.debug.body(this.propTops[0]);
         //this.game.debug.body(this.silverWatchers[0]);
     },
     
     checkLava:function()
     {
-        if(this.game.physics.arcade.collide(this.megaman,this.death)) 
+        if(this.game.physics.arcade.collide(this.megaman,this.death) && this.megaman.inmuFrames == 60) 
         {
             this.megaman.reset(100,100);
             this.stage = 1;
+            this.megaman.inmuFrames = 60;
+            this.megaman.lifeFrames = 0;
         }
     },
     checkStage:function()
@@ -432,6 +470,48 @@ platformer.level1 ={
                         }
                     break;
             }
+    },
+    checkCollisions:function()
+    {
+        this.game.physics.arcade.collide(this.megaman,this.walls);
+        for(var i = 0; i < this.propTops.length; i++)
+            {
+                this.game.physics.arcade.collide(this.propTops[i],this.walls);
+            }
+    },
+    checkAtacks:function()
+    {
+        for(var j = 0; j < this.silverWatchers.length; j++)
+            {
+                if(this.game.physics.arcade.overlap(this.silverWatchers[j],this.megaman)) {
+                    this.megaman.lifeFrames += 2;
+                    this.megaman.inmuFrames = 0;
+                }
+            }
+        
+        for(var i = 0; i < this.propTops.length; i++)
+            {
+                if(this.game.physics.arcade.overlap(this.propTops[i],this.megaman)) {
+                    this.megaman.inmuFrames = 0;
+                    this.megaman.lifeFrames += 4;
+                }
+            }
+        
+        if(this.game.physics.arcade.overlap(this.walker,this.megaman)) {
+                    this.megaman.inmuFrames = 0;
+                    this.megaman.lifeFrames += 4;
+                }
+        if(this.game.physics.arcade.overlap(this.sniper,this.megaman)) {
+                    this.megaman.inmuFrames = 0;
+                    this.megaman.lifeFrames += 4;
+                }
+        
+        if(this.megaman.lifeFrames >= 28){
+            this.megaman.reset(100,100);
+            this.stage = 1;
+            this.megaman.inmuFrames = 60;
+            this.megaman.lifeFrames = 0;
+        }
     },
     loadStairs:function()
     {
