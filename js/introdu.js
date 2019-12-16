@@ -16,6 +16,7 @@ platformer.introduc ={
        var ruta='assets/sprites/';
        this.load.image('menu',ruta+'intro.PNG');
          this.load.image('flecha',ruta+'flecha.PNG');
+        this.load.audio('intro','assets/music/introduction.mp3');
         
       
     },
@@ -38,10 +39,12 @@ platformer.introduc ={
     },
     update:function(){ //actualizamos assets
       
-       
+        this.intro=this.game.add.audio('intro');
+        this.intro.play();
          if(this.spacebar.isDown){
-            
+            this.game.sound.stopAll();
             this.game.state.start('menu');
+            
         }
 
         if(cursores.up.isDown){

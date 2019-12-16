@@ -19,6 +19,8 @@ platformer.game.state.add('main',platformer.level1);
 
 platformer.game.state.add('introd',platformer.introduc);
 
+platformer.game.state.add('mi',platformer.splashScreen);
+
 platformer.game.state.start('introd');
 
 

@@ -17,11 +17,14 @@ platformer.menu ={
        this.load.image('menu',ruta+'MenuM.png');
          this.load.spritesheet('personajes',ruta+'Personajes.png',32,33);
         this.load.spritesheet('cuadrados',ruta+'Cuadrados.png',49,65);
+        this.load.audio('men','assets/music/StageSelect.mp3');
       
     },
     create:function(){ //pintamos assets
        
        _menu = this.game.add.image(0,0,'menu');
+        this.menuSong=this.game.add.audio('men');
+        this.menuSong.play();
         
       
         _menu.scale.setTo(1);
@@ -70,7 +73,8 @@ platformer.menu ={
         //_bg.tilePosition.x--;
        
          if(this.spacebar.isDown&&_cuadrado.position.x>0&&_cuadrado.position.x<60&&_cuadrado.position.y>50&&_cuadrado.position.y<100){
-            
+              
+            this.game.sound.stopAll();
             this.game.state.start('main');
         }
         else{
