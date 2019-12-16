@@ -21,6 +21,8 @@ platformer.level1 ={
         this.load.spritesheet('silverWatcher',ruta+'silverWatcher.png',18,16);
         this.load.spritesheet('propTop',ruta+'propTop.png',32,38);
         
+        this.load.audio('music','assets/music/levelSong.wav');
+        
         this.load.tilemap('HeatManStage','assets/levels/HeatManStage.json',null,Phaser.Tilemap.TILED_JSON);
         
         this.load.atlas('megaman', ruta + 'megaman.png', ruta +'megaman.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
@@ -63,6 +65,10 @@ platformer.level1 ={
         this.map.setCollisionBetween(1,1,true,'Walls');
         this.map.setCollisionBetween(1,1,true,'Death');
         this.map.setCollisionBetween(1,1,true,'Steps');
+        
+        //music
+         this.music=this.game.add.audio('music');
+        this.music.play();
     
 
         this.space = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);

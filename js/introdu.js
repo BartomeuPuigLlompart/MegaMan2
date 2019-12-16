@@ -7,7 +7,7 @@ var _link;
 platformer.introduc ={
     init:function(){
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-        this.scale.setGameSize(gameOptions.gameWidth,gameOptions.gameHeight / 2);
+        this.scale.setGameSize(gameOptions.gameWidth ,gameOptions.gameHeight);
         this.scale.pageAlignHorizontally = true;
         this.scale.pageAlignVertically = true;
            },
@@ -16,19 +16,20 @@ platformer.introduc ={
        var ruta='assets/sprites/';
        this.load.image('menu',ruta+'intro.PNG');
          this.load.image('flecha',ruta+'flecha.PNG');
+        this.load.audio('intro','assets/music/introduction.mp3');
         
       
     },
     create:function(){ //pintamos assets
        
-       _menu = this.game.add.image(50,-40,'menu');
+       _menu = this.game.add.image(-10,40,'menu');
         
       
-       _menu.scale.setTo(0.5);
+       _menu.scale.setTo(0.7);
         
-       _flecha=this.game.add.image(106,176,'flecha');
+       _flecha=this.game.add.image(80,343,'flecha');
         
-       _flecha.scale.setTo(0.5);
+       _flecha.scale.setTo(0.7);
         
        cursores=this.game.input.keyboard.createCursorKeys();
         
@@ -38,16 +39,18 @@ platformer.introduc ={
     },
     update:function(){ //actualizamos assets
       
-       
-         if(this.spacebar.isDown && _flecha.position.y==176){
-            
+        this.intro=this.game.add.audio('intro');
+        this.intro.play();
+         if(this.spacebar.isDown){
+            this.game.sound.stopAll();
             this.game.state.start('menu');
+            
         }
 
         if(cursores.up.isDown){
             if (!flipFlop) {
             
-           _flecha.position.y=176;
+           _flecha.position.y=343;
                 flipFlop=true;
             }
            
@@ -55,7 +58,7 @@ platformer.introduc ={
         if(cursores.down.isDown){
             if (!flipFlop) {
            
-            _flecha.position.y=198;
+            _flecha.position.y=373;
                 
                 flipFlop=true;
             }
@@ -67,11 +70,3 @@ platformer.introduc ={
         
     }
 };
-
-
-
-
-
-
-
-
