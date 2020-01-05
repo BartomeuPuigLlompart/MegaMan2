@@ -2,6 +2,7 @@ var platformer = platformer || {};
 
     var time = 2000;
     var started = false;
+    var visible = false;
 
 platformer.block = function(_game,_x,_y,_tag,_level, _startTime){
     Phaser.Sprite.call(this,_game,_x,_y,_tag);
@@ -27,8 +28,16 @@ platformer.block.prototype.update = function(){
 };
 
 platformer.block.prototype.change = function(){
-    if(this.visible == true) this.visible = false;
-    else this.visible = true;
+    if(visible == true){
+        this.position.y += 1000;
+        this.position.x += 1000;
+        visible = false;
+    }
+    else{
+        visible = true;
+        this.position.y -= 1000;
+        this.position.x -= 1000;
+    }
 };
 
 platformer.block.prototype.start = function(){
