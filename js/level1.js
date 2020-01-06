@@ -96,7 +96,6 @@ platformer.level1 ={
         //Puedes ver los tiles abriendo el JSON con el programa Tiled
         //Trata de colocarlos y arreglar la colisión y las demás cosas que faltan
         this.block = new platformer.block(this.game,this.map.getTile(122, 22, 'World').worldX,this.map.getTile(122, 22, 'World').worldY,'block',this,2000);
-                //this.block = new platformer.block(this.game,this.map.getTile(6, 9, 'World').worldX,this.map.getTile(6, 9, 'World').worldY,'block',this,2000);
         this.game.add.existing(this.block);
         this.block2 = new platformer.block(this.game,this.map.getTile(118, 18, 'World').worldX,this.map.getTile(118, 18, 'World').worldY,'block',this,2000);
         this.game.add.existing(this.block2);
@@ -464,7 +463,7 @@ platformer.level1 ={
                         }
                     break;
                 case 3:
-                    if (this.megaman.position.y < this.map.getTile(114, 29, 'lerp').worldY && this.lerping == false)
+                    if (this.megaman.position.y < this.map.getTile(114, 29, 'lerp').worldY && this.megaman.position.x < this.map.getTile(115, 30, 'World').worldX && this.lerping == false)
                         {
                             this.lerpPatron = this.game.add.sprite(this.map.getTile(120, 22, 'lerp').worldX, this.map.getTile(120, 22, 'lerp').worldY, 'patron');
                             this.camera.follow(this.lerpPatron,Phaser.Camera.FOLLOW_LOCKON, this.lerpValue, this.lerpValue);
@@ -472,7 +471,7 @@ platformer.level1 ={
                             this.megaman.body.allowGravity = false;
                             this.megaman.body.velocity.set(0, 0);
                         }
-                    else if(this.megaman.position.y < this.map.getTile(114, 29, 'lerp').worldY)
+                    else if(this.megaman.position.y < this.map.getTile(114, 29, 'lerp').worldY && this.megaman.position.x < this.map.getTile(115, 30, 'World').worldX)
                         {
                             
                             this.lerpValue += 0.005;
