@@ -205,6 +205,16 @@ platformer.level1 ={
         if(this.lerping == false) this.checkMegamanMovement();
         this.healthbar.frame = this.megaman.lifeFrames;
         
+        //HARdCODED STUFF
+        if(this.game.input.keyboard.addKey(Phaser.Keyboard.ONE).isDown){
+            this.megaman.reset(this.map.getTile(114, 40, 'World').worldX,this.map.getTile(114, 40, 'World').worldY);
+            this.stage = 2;
+        }
+        else if(this.game.input.keyboard.addKey(Phaser.Keyboard.TWO).isDown){
+            this.megaman.reset(this.map.getTile(295, 68, 'World').worldX,this.map.getTile(295, 68, 'World').worldY);
+            this.stage = 4;
+        }
+        
     },
     loadEnemies:function()
     {
@@ -654,6 +664,7 @@ platformer.level1 ={
                 }
         
         if(this.megaman.lifeFrames >= 28){
+            this.game.sound.stopAll();
             this.game.state.start('main');
         }
     },
