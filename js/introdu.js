@@ -34,14 +34,15 @@ platformer.introduc ={
        cursores=this.game.input.keyboard.createCursorKeys();
         
         this.spacebar=this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        this.intro=this.game.add.audio('intro');
+        this.intro.volume = 0.5;
+        this.intro.play();
         
       
     },
     update:function(){ //actualizamos assets
       
-        this.intro=this.game.add.audio('intro');
-        this.intro.volume = 0.01;
-        this.intro.play();
+
          if(this.spacebar.isDown){
             this.game.sound.stopAll();
             this.game.state.start('menu');

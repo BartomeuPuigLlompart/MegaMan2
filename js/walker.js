@@ -1,6 +1,5 @@
 var platformer = platformer || {};
 
-    var health = 10;
     var attackDist = 100;
     var maxDist = 300;
     var jumpSpeed = 300;
@@ -17,6 +16,7 @@ platformer.walker = function(_game,_x,_y,_tag,_level){
     this.timer.start();
     this.game = _game;
     this.level = _level;
+    this.health = 10;
 };
 
 
@@ -57,8 +57,8 @@ platformer.walker.prototype.jump = function(){
 platformer.walker.prototype.damage = function(_walker,_bullet){
  //Whatever
     //console.log('entro o no?');
-    health--;
-    if(health == 0){ 
+    _walker.health--;
+    if(_walker.health == 0){ 
         platformer.level1.sniper.position.x = _walker.position.x;
         _walker.kill();
         platformer.level1.dismount = true;

@@ -1,6 +1,6 @@
 var platformer = platformer || {};
 
-    var health = 3;
+
     var speed = 30;
     var direction = 1;
     var maxDist = 100;
@@ -19,6 +19,7 @@ platformer.spring = function(_game,_x,_y,_tag,_level){
     this.body.allowGravity = true; 
     this.anchor.setTo(0.5, 0.9);
     this.body.setSize(16, 11, this.body.offset.x, this.body.offset.y);
+    this.health = 3;
 };
 
 
@@ -78,9 +79,9 @@ platformer.spring.prototype.turn = function(){
 }
 platformer.spring.prototype.damage = function(_spring,_bullet){
  //Whatever
-    //console.log('entro o no?');
-    health--;
-    if(health == 0){ 
+    console.log(this.health);
+    _spring.health--;
+    if(_spring.health == 0){ 
         _spring.kill();
     }
     _bullet.destroy();

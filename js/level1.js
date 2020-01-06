@@ -74,7 +74,7 @@ platformer.level1 ={
         this.map.setCollisionBetween(1,1,true,'Steps');
         
         //music
-         this.music=this.game.add.audio('music');
+        this.music=this.game.add.audio('music');
         this.music.play();   
 
         this.space = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -95,10 +95,16 @@ platformer.level1 ={
         //Pones la posición por tiles con estas corderanas this.map.getTile(tileX, tileY, 'World').worldX,this.map.getTile(tileX, tileY, 'World').worldY
         //Puedes ver los tiles abriendo el JSON con el programa Tiled
         //Trata de colocarlos y arreglar la colisión y las demás cosas que faltan
-        this.block = new platformer.block(this.game,this.map.getTile(11, 9, 'World').worldX,this.map.getTile(11, 9, 'World').worldY,'block',this,2000);
+        this.block = new platformer.block(this.game,this.map.getTile(122, 22, 'World').worldX,this.map.getTile(122, 22, 'World').worldY,'block',this,2000);
         this.game.add.existing(this.block);
-        this.boss = new platformer.heatman(this.game,this.map.getTile(317, 62, 'World').worldX,this.map.getTile(317, 62, 'World').worldY,200,1,this);
-        this.boss.lifeFrames = 0;
+        this.block2 = new platformer.block(this.game,this.map.getTile(118, 18, 'World').worldX,this.map.getTile(118, 18, 'World').worldY,'block',this,2000);
+        this.game.add.existing(this.block2);
+        this.block3 = new platformer.block(this.game,this.map.getTile(122, 19, 'World').worldX,this.map.getTile(122, 19, 'World').worldY,'block',this,3000);
+        this.game.add.existing(this.block3);
+        this.block4 = new platformer.block(this.game,this.map.getTile(119, 20, 'World').worldX,this.map.getTile(119, 20, 'World').worldY,'block',this,4000);
+        this.game.add.existing(this.block4);
+        
+
         //////////////////////////////////////////////////
         
         this.stage = 1;
@@ -313,6 +319,7 @@ platformer.level1 ={
     {
         if(this.game.physics.arcade.collide(this.megaman,this.death) && this.megaman.inmuFrames == 60) 
         {
+            this.game.sound.stopAll();
             this.game.state.start('main');
         }
     },
@@ -519,6 +526,7 @@ platformer.level1 ={
                                 this.lerpValue = 0;
                                 this.lerping = false;
                                 this.megaman.body.allowGravity = true;
+                                 this.boss = new platformer.heatman(this.game,this.map.getTile(317, 62, 'World').worldX,this.map.getTile(317, 62, 'World').worldY,200,1,this);
                                 this.boss.lifeFrames = 10;
                                 this.bossBar = this.game.add.sprite(40, 10, 'healthbar_boss', this.boss.lifeFrames);
                                 this.bossBar.fixedToCamera = true;

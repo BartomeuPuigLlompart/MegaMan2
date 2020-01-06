@@ -1,6 +1,6 @@
 var platformer = platformer || {};
 
-    var health = 10;
+
 platformer.sniper = function(_game,_x,_y,_tag,_level){
     Phaser.Sprite.call(this,_game,_x,_y,_tag);
     this.game=_game;
@@ -11,6 +11,7 @@ platformer.sniper = function(_game,_x,_y,_tag,_level){
     this.timer = this.game.time.create(false);
     //this.timer.loop(2000, this.attack, this);
     this.timer.start();
+    this.health = 10;
 };
 
 
@@ -40,9 +41,9 @@ platformer.sniper.prototype.jump = function(){
     }
 }
 platformer.sniper.prototype.damage = function(_sniper,_bullet){
-    health--;
-    console.log(health);
-    if(health == -10){ 
+    _sniper.health--;
+    console.log(_sniper.health);
+    if(_sniper.health == 0){ 
         _sniper.kill();
     }
     _bullet.destroy();
