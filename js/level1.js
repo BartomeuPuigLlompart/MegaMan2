@@ -207,6 +207,16 @@ platformer.level1 ={
         if(this.lerping == false) this.checkMegamanMovement();
         this.healthbar.frame = this.megaman.lifeFrames;
         
+        //HARdCODED STUFF
+        if(this.game.input.keyboard.addKey(Phaser.Keyboard.ONE).isDown){
+            this.megaman.reset(this.map.getTile(114, 40, 'World').worldX,this.map.getTile(114, 40, 'World').worldY);
+            this.stage = 2;
+        }
+        else if(this.game.input.keyboard.addKey(Phaser.Keyboard.TWO).isDown){
+            this.megaman.reset(this.map.getTile(295, 68, 'World').worldX,this.map.getTile(295, 68, 'World').worldY);
+            this.stage = 4;
+        }
+        
     },
     loadEnemies:function()
     {
@@ -465,7 +475,7 @@ platformer.level1 ={
                         }
                     break;
                 case 3:
-                    if (this.megaman.position.y < this.map.getTile(114, 29, 'lerp').worldY && this.lerping == false)
+                    if (this.megaman.position.y < this.map.getTile(114, 29, 'lerp').worldY && this.megaman.position.x < this.map.getTile(115, 30, 'World').worldX && this.lerping == false)
                         {
                             this.lerpPatron = this.game.add.sprite(this.map.getTile(120, 22, 'lerp').worldX, this.map.getTile(120, 22, 'lerp').worldY, 'patron');
                             this.camera.follow(this.lerpPatron,Phaser.Camera.FOLLOW_LOCKON, this.lerpValue, this.lerpValue);
@@ -473,7 +483,7 @@ platformer.level1 ={
                             this.megaman.body.allowGravity = false;
                             this.megaman.body.velocity.set(0, 0);
                         }
-                    else if(this.megaman.position.y < this.map.getTile(114, 29, 'lerp').worldY)
+                    else if(this.megaman.position.y < this.map.getTile(114, 29, 'lerp').worldY && this.megaman.position.x < this.map.getTile(115, 30, 'World').worldX)
                         {
                             
                             this.lerpValue += 0.005;
@@ -658,6 +668,7 @@ platformer.level1 ={
                 }
         
         if(this.megaman.lifeFrames >= 28){
+            this.game.sound.stopAll();
             this.game.state.start('main');
         }
     },

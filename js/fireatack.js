@@ -33,7 +33,8 @@ platformer.fireatack.prototype.update = function(){
             this.level.megaman.inmuFrames = 0;
     this.level.megaman.lifeFrames += 1;
     if(this.level.megaman.lifeFrames >= 28){
-           this.level.game.state.start('main');
+        this.level.game.sound.stopAll();
+            this.game.state.start('main');
         }
     this.kill();
         }

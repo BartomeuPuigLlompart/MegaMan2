@@ -92,12 +92,14 @@ platformer.heatman.prototype.update = function(){
     else if(this.actualAnim.isFinished){
         this.actualAnim = this.animations.play('heatman_transition');
     }
+    if(this.health == 0){ 
+        this.level.game.sound.stopAll();
+            this.game.state.start('menu');
+        this.kill();
+    }
 }
 platformer.heatman.prototype.damage = function(_heatman, _bullet){
  //Whatever
     _heatman.health--;
-    if(_heatman.health == 0){ 
-        _heatman.kill();
-    }
     _bullet.destroy();
 };
