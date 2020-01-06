@@ -15,6 +15,8 @@ platformer.heatman = function(_game,_x,_y,_speed,_direction,_level){
     this.animations.add('heatman_firemove',[9, 10, 11, 12, 13, 14, 15, 16, 17,18, 19],10,false);
     this.actualAnim = this.animations.play('heatman_fall');
     
+
+    
     _game.physics.arcade.enable(this);
     this.body.allowGravity = true;
     this.body.setSize(20, 25, this.body.offset.x+16, this.body.offset.y+16);

@@ -24,6 +24,7 @@ platformer.level1 ={
         this.load.spritesheet('heatman', ruta+'heatman.png', 50, 50);
         this.load.spritesheet('fireatack', ruta+'fire_atack.png', 8, 8);
         this.load.audio('music','assets/music/levelSong.wav');
+        this.load.audio('bossMusic','assets/music/bossMusic.wav');
         
         this.load.tilemap('HeatManStage','assets/levels/HeatManStage.json',null,Phaser.Tilemap.TILED_JSON);
         
@@ -75,8 +76,9 @@ platformer.level1 ={
         
         //music
         this.music=this.game.add.audio('music');
-        this.music.play();   
-
+        this.music.play();
+        this.bossMusic = this.game.add.audio('bossMusic');
+        
         this.space = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
           
         this.megaman = this.game.add.sprite(100, 100, 'megaman', 3);
@@ -96,7 +98,6 @@ platformer.level1 ={
         //Puedes ver los tiles abriendo el JSON con el programa Tiled
         //Trata de colocarlos y arreglar la colisión y las demás cosas que faltan
         this.block = new platformer.block(this.game,this.map.getTile(122, 22, 'World').worldX,this.map.getTile(122, 22, 'World').worldY,'block',this,2000);
-                //this.block = new platformer.block(this.game,this.map.getTile(6, 9, 'World').worldX,this.map.getTile(6, 9, 'World').worldY,'block',this,2000);
         this.game.add.existing(this.block);
         this.block2 = new platformer.block(this.game,this.map.getTile(118, 18, 'World').worldX,this.map.getTile(118, 18, 'World').worldY,'block',this,2000);
         this.game.add.existing(this.block2);
@@ -593,6 +594,8 @@ platformer.level1 ={
                                 this.lerpValue = 0;
                                 this.lerping = false;
                                 this.megaman.body.allowGravity = true;
+                                            this.game.sound.stopAll();
+                                this.bossMusic.play();
                                  this.boss = new platformer.heatman(this.game,this.map.getTile(317, 62, 'World').worldX,this.map.getTile(317, 62, 'World').worldY,200,1,this);
                                 this.boss.lifeFrames = 10;
                                 this.bossBar = this.game.add.sprite(40, 10, 'healthbar_boss', this.boss.lifeFrames);
