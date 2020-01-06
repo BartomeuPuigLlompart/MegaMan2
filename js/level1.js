@@ -96,6 +96,7 @@ platformer.level1 ={
         //Puedes ver los tiles abriendo el JSON con el programa Tiled
         //Trata de colocarlos y arreglar la colisión y las demás cosas que faltan
         this.block = new platformer.block(this.game,this.map.getTile(122, 22, 'World').worldX,this.map.getTile(122, 22, 'World').worldY,'block',this,2000);
+                //this.block = new platformer.block(this.game,this.map.getTile(6, 9, 'World').worldX,this.map.getTile(6, 9, 'World').worldY,'block',this,2000);
         this.game.add.existing(this.block);
         this.block2 = new platformer.block(this.game,this.map.getTile(118, 18, 'World').worldX,this.map.getTile(118, 18, 'World').worldY,'block',this,2000);
         this.game.add.existing(this.block2);
@@ -103,8 +104,71 @@ platformer.level1 ={
         this.game.add.existing(this.block3);
         this.block4 = new platformer.block(this.game,this.map.getTile(119, 20, 'World').worldX,this.map.getTile(119, 20, 'World').worldY,'block',this,4000);
         this.game.add.existing(this.block4);
+        this.block5 = new platformer.block(this.game,this.map.getTile(131, 40, 'World').worldX,this.map.getTile(131, 40, 'World').worldY,'block',this,2000);
+        this.game.add.existing(this.block5);
+        this.block6 = new platformer.block(this.game,this.map.getTile(138, 40, 'World').worldX,this.map.getTile(138, 40, 'World').worldY,'block',this,3000);
+        this.game.add.existing(this.block6);
+        this.block7 = new platformer.block(this.game,this.map.getTile(138, 38, 'World').worldX,this.map.getTile(138, 38, 'World').worldY,'block',this,4000);
+        this.game.add.existing(this.block7);
+        this.block8 = new platformer.block(this.game,this.map.getTile(154, 40, 'World').worldX,this.map.getTile(154, 40, 'World').worldY,'block',this,3000);
+        this.game.add.existing(this.block8);
+        this.block9 = new platformer.block(this.game,this.map.getTile(164, 40, 'World').worldX,this.map.getTile(164, 40, 'World').worldY,'block',this,4000);
+        this.game.add.existing(this.block9);
+        this.block10 = new platformer.block(this.game,this.map.getTile(164, 37, 'World').worldX,this.map.getTile(164, 37, 'World').worldY,'block',this,3000);
+        this.game.add.existing(this.block10);
+        this.block11 = new platformer.block(this.game,this.map.getTile(173, 41, 'World').worldX,this.map.getTile(173, 41, 'World').worldY,'block',this,4000);
+        this.game.add.existing(this.block11);
         
-
+        this.block12 = new platformer.block(this.game,this.map.getTile(206, 37, 'World').worldX,this.map.getTile(206, 37, 'World').worldY,'block',this,0);
+        this.game.add.existing(this.block12);
+        this.block13 = new platformer.block(this.game,this.map.getTile(209, 37, 'World').worldX,this.map.getTile(209, 37, 'World').worldY,'block',this,500);
+        this.game.add.existing(this.block13);
+        this.block14 = new platformer.block(this.game,this.map.getTile(212, 37, 'World').worldX,this.map.getTile(212, 37, 'World').worldY,'block',this,2000);
+        this.game.add.existing(this.block14);
+        this.block15 = new platformer.block(this.game,this.map.getTile(215, 34, 'World').worldX,this.map.getTile(215, 34, 'World').worldY,'block',this,2500);
+        this.game.add.existing(this.block15);
+        this.block16 = new platformer.block(this.game,this.map.getTile(212, 35, 'World').worldX,this.map.getTile(212, 35, 'World').worldY,'block',this,3000);
+        this.game.add.existing(this.block16);
+        this.block17 = new platformer.block(this.game,this.map.getTile(218, 37, 'World').worldX,this.map.getTile(218, 37, 'World').worldY,'block',this,4500);
+        this.game.add.existing(this.block17);
+        
+        this.block177 = new platformer.block(this.game,this.map.getTile(221, 37, 'World').worldX,this.map.getTile(221, 37, 'World').worldY,'block',this,5500);
+        this.game.add.existing(this.block177);
+        this.block18 = new platformer.block(this.game,this.map.getTile(224, 34, 'World').worldX,this.map.getTile(224, 34, 'World').worldY,'block',this,6000);
+        this.game.add.existing(this.block18);
+        this.block19 = new platformer.block(this.game,this.map.getTile(221, 34, 'World').worldX,this.map.getTile(221, 34, 'World').worldY,'block',this,6500);
+        this.game.add.existing(this.block19);
+        this.block20 = new platformer.block(this.game,this.map.getTile(227, 34, 'World').worldX,this.map.getTile(227, 34, 'World').worldY,'block',this,7500);
+        this.game.add.existing(this.block20);
+        this.block21 = new platformer.block(this.game,this.map.getTile(230, 36, 'World').worldX,this.map.getTile(230, 36, 'World').worldY,'block',this,8500);
+        this.game.add.existing(this.block21);
+        this.block22 = new platformer.block(this.game,this.map.getTile(233, 36, 'World').worldX,this.map.getTile(233, 36, 'World').worldY,'block',this,9000);
+        this.game.add.existing(this.block22);
+        this.block23 = new platformer.block(this.game,this.map.getTile(236, 36, 'World').worldX,this.map.getTile(236, 36, 'World').worldY,'block',this,9500);
+        this.game.add.existing(this.block23);
+        this.block24 = new platformer.block(this.game,this.map.getTile(239, 36, 'World').worldX,this.map.getTile(239, 36, 'World').worldY,'block',this,10000);
+        this.game.add.existing(this.block24);
+        this.block25 = new platformer.block(this.game,this.map.getTile(242, 36, 'World').worldX,this.map.getTile(242, 36, 'World').worldY,'block',this,10500);
+        this.game.add.existing(this.block25);
+        this.block26 = new platformer.block(this.game,this.map.getTile(245, 37, 'World').worldX,this.map.getTile(245, 37, 'World').worldY,'block',this,11000);
+        this.game.add.existing(this.block26);
+        this.block27 = new platformer.block(this.game,this.map.getTile(248, 36, 'World').worldX,this.map.getTile(248, 36, 'World').worldY,'block',this,11500);
+        this.game.add.existing(this.block27);
+        this.block28 = new platformer.block(this.game,this.map.getTile(251, 35, 'World').worldX,this.map.getTile(251, 35, 'World').worldY,'block',this,12000);
+        this.game.add.existing(this.block28);
+        this.block29 = new platformer.block(this.game,this.map.getTile(254, 34, 'World').worldX,this.map.getTile(254, 34, 'World').worldY,'block',this,12500);
+        this.game.add.existing(this.block29);
+        this.block30 = new platformer.block(this.game,this.map.getTile(257, 39, 'World').worldX,this.map.getTile(257, 39, 'World').worldY,'block',this,13000);
+        this.game.add.existing(this.block30);
+        this.block31 = new platformer.block(this.game,this.map.getTile(260, 39, 'World').worldX,this.map.getTile(260, 39, 'World').worldY,'block',this,13500);
+        this.game.add.existing(this.block31);
+        this.block32 = new platformer.block(this.game,this.map.getTile(263, 39, 'World').worldX,this.map.getTile(263, 39, 'World').worldY,'block',this,14000);
+        this.game.add.existing(this.block32);
+        this.block33 = new platformer.block(this.game,this.map.getTile(266, 37, 'World').worldX,this.map.getTile(266, 37, 'World').worldY,'block',this,14500);
+        this.game.add.existing(this.block33);
+        this.block34 = new platformer.block(this.game,this.map.getTile(269, 36, 'World').worldX,this.map.getTile(269, 36, 'World').worldY,'block',this,15000);
+        this.game.add.existing(this.block34);
+        
         //////////////////////////////////////////////////
         
         this.stage = 1;
@@ -202,7 +266,7 @@ platformer.level1 ={
             this.megaman.body.allowGravity = true;
         if(this.cursors.left.isDown){
             this.megaman.body.velocity.x = -gameOptions.heroSpeed;
-            if(this.megaman.body.blocked.down){
+            if(this.megaman.body.blocked.down || this.megaman.canJump){
                 if(this.shooting == true) this.megaman.animations.play('shoot_run');
                 else if(!this.shootRun.isPlaying)this.megaman.animations.play('run');
             }
@@ -210,7 +274,7 @@ platformer.level1 ={
         }else
         if(this.cursors.right.isDown){
             this.megaman.body.velocity.x = gameOptions.heroSpeed;
-            if(this.megaman.body.blocked.down){
+            if(this.megaman.body.blocked.down || this.megaman.canJump){
                 if(this.shooting == true) this.megaman.animations.play('shoot_run');
                 else if(!this.shootRun.isPlaying)this.megaman.animations.play('run');
             }
@@ -218,17 +282,19 @@ platformer.level1 ={
             this.megaman.scale.x = 1;
         }else{
             this.megaman.body.velocity.x = 0;
-            if(this.megaman.body.blocked.down){
+            if(this.megaman.body.blocked.down || this.megaman.canJump){
                 this.megaman.animations.stop();
                 if(this.shooting == true) this.megaman.frame = 3;
                 if(this.megaman.frame != 3)this.megaman.frame=1;
             }
         }
-        if(this.cursors.up.isDown &&this.cursors.up.downDuration(1) ){
+        if(this.cursors.up.isDown && this.cursors.up.downDuration(1) && (this.megaman.body.blocked.down || this.megaman.canJump)){
+            this.megaman.canJump = false;
             this.megaman.body.velocity.y = -gameOptions.heroJump;
+            this.megaman.body.position.y--;
             this.megaman.animations.stop();
         }
-        if(!this.megaman.body.blocked.down){
+        if(!this.megaman.body.blocked.down && !this.megaman.canJump){
             if(this.megaman.frame != 12){
                 this.megaman.frame = 11;
             }
@@ -237,6 +303,7 @@ platformer.level1 ={
             }
         }
         this.shooting = false;
+            console.log(this.megaman.canJump);
         }
         else{
             if(this.timer.running  == false){
@@ -540,7 +607,7 @@ platformer.level1 ={
             }
     },
     checkCollisions:function()
-    {
+    {       
         this.game.physics.arcade.collide(this.megaman,this.walls);
         if(this.stage == 6) this.game.physics.arcade.collide(this.megaman,this.bossWalls);
         for(var i = 0; i < this.propTops.length; i++)
@@ -618,5 +685,6 @@ platformer.level1 ={
             }
         }
         
-    }
-};
+    },
+}
+

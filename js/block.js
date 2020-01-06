@@ -6,7 +6,7 @@ platformer.block = function(_game,_x,_y,_tag,_level, _startTime){
     Phaser.Sprite.call(this,_game,_x,_y,_tag);
     this.game=_game;
     this.game.physics.arcade.enable(this);
-    this.anchor.setTo(0.5, 0);
+    this.anchor.setTo(0.5);
     this.level=_level;
     this.body.immovable = true;
     this.timer = this.game.time.create(false);
@@ -24,7 +24,7 @@ platformer.block.prototype = Object.create(Phaser.Sprite.prototype);
 platformer.block.prototype.constructor = platformer.block;
 
 platformer.block.prototype.update = function(){
-    this.game.physics.arcade.collide(this.level.megaman,this);
+                this.game.physics.arcade.collide(this,this.level.megaman,this.jumper);
 };
 
 platformer.block.prototype.change = function(){
@@ -53,3 +53,9 @@ platformer.block.prototype.start = function(){
         this.started = true;
     }
 };
+
+platformer.block.prototype.jumper = function(_block,_megaman){
+console.log("asi e");
+_megaman.canJump = true;
+};
+ 

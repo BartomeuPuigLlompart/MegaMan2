@@ -13,6 +13,7 @@ platformer.megaman = function(_game,_x,_y,_speed,_level){
     this.game.physics.arcade.enable(this);
     this.chase = false;
     this.range = 100;
+    this.canJump = false;
 };
 
 platformer.jumper_prefab.prototype = Object.create(Phaser.Sprite.prototype);
