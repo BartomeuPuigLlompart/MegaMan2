@@ -21,6 +21,8 @@ platformer.level1 ={
         this.load.spritesheet('silverWatcher',ruta+'silverWatcher.png',18,16);
         this.load.spritesheet('propTop',ruta+'propTop.png',32,38);
         this.load.spritesheet('block', ruta+'bloquesM.png', 16, 17);
+        this.load.spritesheet('heatman', ruta+'heatman.png', 50, 50);
+        this.load.spritesheet('fireatack', ruta+'fire_atack.png', 8, 8);
         this.load.audio('music','assets/music/levelSong.wav');
         
         this.load.tilemap('HeatManStage','assets/levels/HeatManStage.json',null,Phaser.Tilemap.TILED_JSON);
@@ -31,6 +33,7 @@ platformer.level1 ={
         this.load.atlas('spring', ruta + 'spring.png', ruta +'spring.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
         
         this.load.spritesheet('healthbar', ruta+'healthbar.png', 8, 56);
+        this.load.spritesheet('healthbar_boss', ruta+'healthbar_boss.png', 8, 56);
         this.cursors = this.game.input.keyboard.createCursorKeys();
         
         var ruta = 'assets/sounds/';
@@ -47,6 +50,8 @@ platformer.level1 ={
         this.map.addTilesetImage('patron');
         this.walls = this.map.createLayer('Walls');
         this.walls.setScale(0.5, 0.5);
+        this.bossWalls = this.map.createLayer('bossWalls');
+        this.bossWalls.setScale(0.5, 0.5);
         this.tileWorld = this.map.createLayer('World');
         this.tileWorld.setScale(0.5, 0.5);
         this.death = this.map.createLayer('Death');
@@ -64,6 +69,7 @@ platformer.level1 ={
         this.joeRes = this.map.createLayer('joeRes');
         this.joeRes.setScale(0.5, 0.5);
         this.map.setCollisionBetween(1,1,true,'Walls');
+        this.map.setCollisionBetween(1,1,true,'bossWalls');
         this.map.setCollisionBetween(1,1,true,'Death');
         this.map.setCollisionBetween(1,1,true,'Steps');
         
@@ -86,8 +92,13 @@ platformer.level1 ={
         this.healthbar.fixedToCamera = true;
         
         //////////////////////////////////////////////////
-        this.block = new platformer.block(this.game,150,150,'block',this,2000);
+        //Pones la posición por tiles con estas corderanas this.map.getTile(tileX, tileY, 'World').worldX,this.map.getTile(tileX, tileY, 'World').worldY
+        //Puedes ver los tiles abriendo el JSON con el programa Tiled
+        //Trata de colocarlos y arreglar la colisión y las demás cosas que faltan
+        this.block = new platformer.block(this.game,this.map.getTile(11, 9, 'World').worldX,this.map.getTile(11, 9, 'World').worldY,'block',this,2000);
         this.game.add.existing(this.block);
+        this.boss = new platformer.heatman(this.game,this.map.getTile(317, 62, 'World').worldX,this.map.getTile(317, 62, 'World').worldY,200,1,this);
+        this.boss.lifeFrames = 0;
         //////////////////////////////////////////////////
         
         this.stage = 1;
@@ -108,7 +119,6 @@ platformer.level1 ={
         
     },
     update:function(){        
-       
         if(this.dismount == true) {
             this.game.add.existing(this.sniper);
         }
@@ -294,7 +304,7 @@ platformer.level1 ={
     render:function()
     {
         //this.game.debug.body(this.megaman);
-        this.game.debug.body(this.springs[0]);
+        //this.game.debug.body(this.boss);
         //this.game.debug.body(this.propTops[0]);
         //this.game.debug.body(this.silverWatchers[0]);
     },
@@ -303,10 +313,7 @@ platformer.level1 ={
     {
         if(this.game.physics.arcade.collide(this.megaman,this.death) && this.megaman.inmuFrames == 60) 
         {
-            this.megaman.reset(100,100);
-            this.stage = 1;
-            this.megaman.inmuFrames = 60;
-            this.megaman.lifeFrames = 0;
+            this.game.state.start('main');
         }
     },
     checkStage:function()
@@ -493,12 +500,41 @@ platformer.level1 ={
                                 this.megaman.body.allowGravity = true;
                             }
                         }
+                    if (this.megaman.position.x > this.map.getTile(306, 67, 'lerp').worldX && this.lerping == false)
+                        {
+                            this.lerpPatron = this.game.add.sprite(this.map.getTile(312, 68, 'lerp').worldX, this.map.getTile(312, 68, 'lerp').worldY, 'patron')
+                            this.camera.follow(this.lerpPatron,Phaser.Camera.FOLLOW_LOCKON, this.lerpValue, this.lerpValue);
+                            this.lerping = true;
+                            this.megaman.body.allowGravity = false;
+                            this.megaman.body.velocity.set(0, 0);
+                        }
+                    else if(this.megaman.position.x > this.map.getTile(306, 67, 'lerp').worldX)
+                        {
+                            
+                            this.lerpValue += 0.005;
+                            this.camera.follow(this.lerpPatron,Phaser.Camera.FOLLOW_LOCKON, this.lerpValue, this.lerpValue);
+                            if(this.lerpValue >= 0.3) {
+                                this.game.world.setBounds(0,0,this.map.getTile(319, 60).worldX + this.map.getTile(319, 60).width,1200);
+                                this.stage = 6;
+                                this.lerpValue = 0;
+                                this.lerping = false;
+                                this.megaman.body.allowGravity = true;
+                                this.boss.lifeFrames = 10;
+                                this.bossBar = this.game.add.sprite(40, 10, 'healthbar_boss', this.boss.lifeFrames);
+                                this.bossBar.fixedToCamera = true;
+                            }
+                        }
+                    break;
+                case 6:
+                    this.bossBar.frame = 28 - this.boss.health;
+                    if (this.megaman.position.y < this.map.getTile(275, 60, 'lerp').worldY) this.stage = 1;
                     break;
             }
     },
     checkCollisions:function()
     {
         this.game.physics.arcade.collide(this.megaman,this.walls);
+        if(this.stage == 6) this.game.physics.arcade.collide(this.megaman,this.bossWalls);
         for(var i = 0; i < this.propTops.length; i++)
             {
                 this.game.physics.arcade.collide(this.propTops[i],this.walls);
@@ -534,16 +570,17 @@ platformer.level1 ={
                     this.megaman.inmuFrames = 0;
                     this.megaman.lifeFrames += 4;
                 }
+        if(this.game.physics.arcade.overlap(this.boss,this.megaman)) {
+                    this.megaman.inmuFrames = 0;
+                    this.megaman.lifeFrames += 8;
+                }
         if(this.game.physics.arcade.overlap(this.sniper,this.megaman)) {
                     this.megaman.inmuFrames = 0;
                     this.megaman.lifeFrames += 4;
                 }
         
         if(this.megaman.lifeFrames >= 28){
-            this.megaman.reset(100,100);
-            this.stage = 1;
-            this.megaman.inmuFrames = 60;
-            this.megaman.lifeFrames = 0;
+            this.game.state.start('main');
         }
     },
     loadStairs:function()

@@ -63,7 +63,7 @@ platformer.propTop.prototype.update = function(){
                 }
             else if(((this.frameCount - 180) / 33) <= 1)
                 {
-                this.body.position.x = this.initialX + this.target * ((this.frameCount - 180) / 33);
+                this.body.position.x += this.target * 0.033;
                 }
         }  
     this.game.physics.arcade.overlap(this,this.level.bullets,this.damage);
